@@ -1,0 +1,14 @@
+.git*
+.dockerignore
+
+.vs/
+.idea/
+
+**/bin/
+**/obj/
+**/node_modules/
+**/wwwroot/
+
+**/*.md
+**/*_pb.js
+**/*_pb.d.ts

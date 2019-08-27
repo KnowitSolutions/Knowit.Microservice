@@ -1,0 +1,16 @@
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/core/sdk:3.0
+  script: dotnet pack --output . -p:PackageVersion=0.9.$CI_PIPELINE_IID
+  artifacts:
+    paths:
+      - '*.nupkg'
+
+deploy:
+  stage: deploy
+  image: mcr.microsoft.com/dotnet/core/sdk:3.0
+  script:
+    for package in *.nupkg;
+    do
+      dotnet nuget push "$package" --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY;
+    done

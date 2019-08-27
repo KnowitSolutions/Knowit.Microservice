@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Andreas Hagen",
+  "classifications": [
+    "Web",
+    "gRPC",
+    "React",
+    "Microservice",
+    "Microfrontend"
+  ],
+  "identity": "Knowit.Microservice.CSharp",
+  "name": "Knowit Microservice",
+  "shortName": "knowitmicroservice",
+  "sourceName": "ProjectName",
+  "symbols": {
+    "elasticsearchAddress": {
+      "type": "parameter",
+      "defaultValue": "http://REPLACE_ME:9200",
+      "replaces": "http://localhost:9200"
+    },
+    "elasticsearchIndexName": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "name",
+        "toLower": true
+      },
+      "replaces": "projectname"
+    }
+  }
+}

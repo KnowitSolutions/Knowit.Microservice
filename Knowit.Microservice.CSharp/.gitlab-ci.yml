@@ -1,0 +1,17 @@
+include:
+  - project: r/ci-cd-fragments
+    file: docker.yml
+  - project: r/ci-cd-fragments
+    file: code-quality.yml
+
+Build:
+  extends: .docker-build
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    BUILDER: 'true'
+
+Test:
+  extends: .docker-test-report
+  allow_failure: true
+  variables:
+    COMMAND: dotnet test --logger "junit;LogFilePath=$REPORT_PATTERN"

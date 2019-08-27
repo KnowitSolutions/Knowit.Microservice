@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    </PropertyGroup>
+
+    <Target Name="Yarn" AfterTargets="CollectPackageReferences">
+        <Exec Command="yarn install" />
+    </Target>
+
+    <Target Name="Webpack" AfterTargets="BeforeBuild">
+        <Exec Command="yarn build" />
+    </Target>
+
+</Project>

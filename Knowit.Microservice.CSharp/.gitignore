@@ -1,0 +1,16 @@
+**/.idea/contentModel.xml
+**/.idea/workspace.xml
+**/.idea/usage.statistics.xml
+**/.idea/tasks.xml
+**/.idea/dataSources*
+.vs/
+.user
+.suo
+
+bin/
+obj/
+node_modules/
+wwwroot/
+
+*_pb.js
+*_pb.d.ts

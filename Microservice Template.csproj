@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageType>Template</PackageType>
+        <PackageVersion />
+        <PackageId>Knowit.Microservice</PackageId>
+        <Title>Knowit Microservice Template</Title>
+        <Authors>Andreas Hagen</Authors>
+        <Description>Template for creating microservices at Knowit.</Description>
+        <PackageTags>dotnet-new;template;knowit</PackageTags>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <ContentTargetFolders>content</ContentTargetFolders>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="**\*" />
+        <Content Include="Knowit.Microservice.CSharp\**\*" Exclude="**\.idea\**;**\bin\**;**\obj\**;**\node_modules\**;**\wwwroot\**;**\*_pb.js;**\*_pb.d.ts" />
+    </ItemGroup>
+
+</Project>

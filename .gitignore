@@ -1,0 +1,11 @@
+**/.idea/contentModel.xml
+**/.idea/workspace.xml
+**/.idea/usage.statistics.xml
+**/.idea/tasks.xml
+**/.idea/dataSources*
+.vs/
+.user
+.suo
+
+bin/
+obj/
