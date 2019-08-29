@@ -11,7 +11,7 @@ const webpackOptions = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, 
+        test: /\.tsx?$/,
         loaders: [
           {loader: "babel-loader", options: {presets: ["@babel/preset-env"]}},
           {loader: "ts-loader"}

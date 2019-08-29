@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <Target Name="Yarn" AfterTargets="CollectPackageReferences">

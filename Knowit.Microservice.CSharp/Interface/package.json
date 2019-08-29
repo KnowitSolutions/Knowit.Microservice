@@ -7,6 +7,7 @@
     "@babel/preset-env": "7.5.5",
     "babel-loader": "8.0.6",
     "copy-webpack-plugin": "5.0.4",
+    "glob": "7.1.4",
     "google-protobuf": "3.9.1",
     "grpc-web": "1.0.6",
     "html-webpack-plugin": "3.2.0",
@@ -19,7 +20,6 @@
     "webpack-cli": "3.3.7"
   },
   "scripts": {
-    "protoc": "protoc ../Contracts/*.proto --proto_path=.. --js_out=import_style=commonjs:. --grpc-web_out=import_style=commonjs+dts,mode=grpcwebtext:.",
-    "build": "yarn protoc && webpack --config webpack.config.js"
+    "build": "node protoc.js && webpack --config webpack.config.js"
   }
 }
