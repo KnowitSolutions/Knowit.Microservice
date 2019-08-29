@@ -20,6 +20,6 @@
     "webpack-cli": "3.3.7"
   },
   "scripts": {
-    "build": "node protoc.js && webpack --config webpack.config.js"
+    "build": "node grpc && webpack --config webpack.config.js"
   }
 }
