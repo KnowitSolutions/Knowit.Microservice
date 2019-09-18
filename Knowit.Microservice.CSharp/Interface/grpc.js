@@ -2,7 +2,11 @@ const child_process = require("child_process");
 const glob = require("glob");
 const fs = require("fs");
 
-fs.mkdirSync("Contracts");
+try {
+  fs.mkdirSync("Contracts");
+} catch (error) {
+  if (error.code !== "EEXIST") throw error;
+}
 
 const files = glob.sync("../Contracts/*.proto");
 child_process.execSync([
