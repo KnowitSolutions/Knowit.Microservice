@@ -8,10 +8,12 @@ namespace Service
     public class Service : Core.CoreBase
     {
         private readonly ILogger<Service> _logger;
+        private readonly Other.OtherClient _otherClient;
 
-        public Service(ILogger<Service> logger)
+        public Service(ILogger<Service> logger, Other.OtherClient otherClient)
         {
             _logger = logger;
+            _otherClient = otherClient;
         }
 
         public override Task<EchoResponse> Echo(EchoRequest request, ServerCallContext context)
