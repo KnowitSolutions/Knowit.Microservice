@@ -46,7 +46,7 @@ namespace Host
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpcClientConfiguration<Other.OtherClient>(null);
+            services.AddGrpcClientConfiguration<Other.OtherClient>();
             services.AddCorrelationId();
             services.AddGrpcWeb();
             services.AddGrpc(options =>
