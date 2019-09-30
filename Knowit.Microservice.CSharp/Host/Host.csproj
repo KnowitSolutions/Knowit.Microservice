@@ -1,20 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="0.1.22-pre3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.23.2" />
         <PackageReference Include="Serilog" Version="2.9.0-dev-01119" />
-        <PackageReference Include="Serilog.AspNetCore" Version="3.0.0-dev-00059" />
+        <PackageReference Include="Serilog.AspNetCore" Version="3.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="3.1.2-dev-00806" />
         <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.0.0" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.1-dev-00209" />
-        <PackageReference Include="Knowit.Grpc.Client" Version="0.9.19" />
-        <PackageReference Include="Knowit.Grpc.Correlation" Version="0.9.19" />
-        <PackageReference Include="Knowit.Grpc.Web" Version="0.9.19" />
-        <PackageReference Include="Knowit.Kestrel.ProtocolMultiplexing" Version="0.9.19" />
+        <PackageReference Include="Knowit.Grpc.Client" Version="0.9.23" />
+        <PackageReference Include="Knowit.Grpc.Correlation" Version="0.9.20" />
+        <PackageReference Include="Knowit.Grpc.Web" Version="0.9.20" />
+        <PackageReference Include="Knowit.Kestrel.ProtocolMultiplexing" Version="0.9.20" />
     </ItemGroup>
 
     <ItemGroup>

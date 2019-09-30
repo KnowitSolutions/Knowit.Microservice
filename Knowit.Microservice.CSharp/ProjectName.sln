@@ -11,6 +11,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{2C2CCF17-6EA0-4AB5-A1B2-9C0C2A93D57C}"
 ProjectSection(SolutionItems) = preProject
 	Contracts\ProjectName.proto = Contracts\ProjectName.proto
+	Contracts\Other.proto = Contracts\Other.proto
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{A786F8F3-DB0C-434E-A1B9-94A0196C2B4E}"

@@ -1,3 +1,4 @@
+using Knowit.Grpc.Client;
 using Knowit.Grpc.Correlation;
 using Knowit.Grpc.Validation;
 using Knowit.Grpc.Web;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectName;
 using Serilog;
 using Serilog.Events;
 using Service;
@@ -44,7 +46,7 @@ namespace Host
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            // TODO: Add client config example
+            services.AddGrpcClientConfiguration<Other.OtherClient>(null);
             services.AddCorrelationId();
             services.AddGrpcWeb();
             services.AddGrpc(options =>
