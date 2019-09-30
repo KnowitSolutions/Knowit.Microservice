@@ -6,12 +6,17 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <WebpackInput Include="**/*.js;**/*.jsx;**/*.ts;**/*.tsx;"/>
+        <WebpackOutput Include="../Host/wwwroot/*"/>
+    </ItemGroup>
+
     <Target Name="Yarn" AfterTargets="CollectPackageReferences">
         <Exec Command="yarn install" />
     </Target>
 
-    <Target Name="Webpack" AfterTargets="BeforeBuild">
-        <Exec Command="yarn build" />
+    <Target Name="Webpack" AfterTargets="BeforeBuild" Inputs="@(WebpackInput)" Outputs="@(WebpackOutput)">
+        <Exec Command="yarn build"/>
     </Target>
 
 </Project>
