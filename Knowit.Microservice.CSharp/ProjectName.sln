@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{047C1C52-E2C3-45CB-AE24-F83E1C1D245E}"
 ProjectSection(SolutionItems) = preProject
@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0AAFD83E-C05D-4182-B26E-2C24680405DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{CFDA45EB-7FFA-46C6-8AD4-7643BF233A9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,9 @@ Global
 		{0AAFD83E-C05D-4182-B26E-2C24680405DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AAFD83E-C05D-4182-B26E-2C24680405DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AAFD83E-C05D-4182-B26E-2C24680405DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFDA45EB-7FFA-46C6-8AD4-7643BF233A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFDA45EB-7FFA-46C6-8AD4-7643BF233A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFDA45EB-7FFA-46C6-8AD4-7643BF233A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFDA45EB-7FFA-46C6-8AD4-7643BF233A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

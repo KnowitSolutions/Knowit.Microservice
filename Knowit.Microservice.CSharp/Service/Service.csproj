@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <IsPackable>false</IsPackable>
@@ -13,18 +12,21 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Repository\Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Protobuf Include="..\Contracts\ProjectName.proto" />
         <Protobuf Include="..\Contracts\Other.proto" />
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\app.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\app.js.map" />
-      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
-      <_ContentIncludedByDefault Remove="wwwroot\main.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\main.js.map" />
-      <_ContentIncludedByDefault Remove="wwwroot\react-dom.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\react.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\app.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\app.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+        <_ContentIncludedByDefault Remove="wwwroot\main.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\main.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\react-dom.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\react.js" />
     </ItemGroup>
-
 </Project>

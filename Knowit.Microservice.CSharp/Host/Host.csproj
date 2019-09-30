@@ -15,11 +15,14 @@
         <PackageReference Include="Knowit.Grpc.Correlation" Version="0.9.25" />
         <PackageReference Include="Knowit.Grpc.Web" Version="0.9.25" />
         <PackageReference Include="Knowit.Kestrel.ProtocolMultiplexing" Version="0.9.20" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <ProjectReference Include="..\Interface\Interface.csproj" />
         <ProjectReference Include="..\Service\Service.csproj" />
     </ItemGroup>
-    
+
 </Project>
