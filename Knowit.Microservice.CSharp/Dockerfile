@@ -12,6 +12,7 @@ COPY *.sln .
 COPY Host/*.csproj Host/
 COPY Interface/*.csproj Interface/package.json Interface/yarn.lock Interface/
 COPY Service/*.csproj Service/
+COPY Repository/*.csproj Repository/
 COPY Tests/*.csproj Tests/
 RUN dotnet restore
 
