@@ -1,4 +1,5 @@
-﻿﻿using Microsoft.EntityFrameworkCore;
+﻿﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -8,6 +9,7 @@ namespace Repository
         {
         }
 
-        public DbSet<Entity> Entity { get; set; }
+        [NotNull]
+        public DbSet<Entity>? Entity { get; set; }
     }
 }
