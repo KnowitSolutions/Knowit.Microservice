@@ -28,4 +28,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 WORKDIR /app
 COPY --from=builder /output ./
 
-ENTRYPOINT ["dotnet", "Host"]
+ENTRYPOINT ["dotnet", "Host.dll"]
