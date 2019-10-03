@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Knowit.Grpc.Testing;
@@ -19,6 +20,12 @@ namespace Tests
         {
             base.ConfigureServices(services);
 
+            // TODO: Add client mocking
+            services.AddGrpcClient<Other.OtherClient>(options =>
+            {
+                options.Address = new Uri("http://localhost");
+            });
+            
             services.AddDbContext<Database>(options =>
                 options.UseInMemoryDatabase("TestDatabase")
             );
