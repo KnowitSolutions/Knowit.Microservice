@@ -9,6 +9,7 @@ build:
 deploy:
   stage: deploy
   image: mcr.microsoft.com/dotnet/core/sdk:3.0
+  only: [master]
   script:
     for package in *.nupkg;
     do
