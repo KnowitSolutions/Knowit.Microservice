@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using Knowit.Grpc.Client;
 using Knowit.Grpc.Correlation;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using ProjectName;
 using Repository;
 using Serilog;
+using Serilog.Debugging;
 using Serilog.Events;
 using Service;
 using HostBuilder = Microsoft.Extensions.Hosting.Host;
@@ -23,9 +25,11 @@ namespace Host
 {
     public class Program
     {
-        public static void Main(string[] args) => CreateHostBuilder(args)
-            .Build()
-            .Run();
+        public static void Main(string[] args)
+        {
+            SelfLog.Enable(Console.Error);
+            CreateHostBuilder(args).Build().Run();
+        }
 
         public static IHostBuilder CreateHostBuilder(string[] args) => HostBuilder
             .CreateDefaultBuilder(args)
