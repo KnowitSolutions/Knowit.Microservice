@@ -21,12 +21,22 @@ dotnet --version
 
 #### Install the Protobuf compiler
 
-Download and install the latest version [here](https://github.com/protocolbuffers/protobuf/releases).
+Download and install the latest version [from the GitHub releases page](https://github.com/protocolbuffers/protobuf/releases).
 
 Verify the installation with the following command
 ```
 protoc --version
 ```
+
+#### Install grpc-web Code Generator Plugin
+
+Download and install the latest version [from the GitHub releases page](https://github.com/grpc/grpc-web/releases)
+
+Verify the installation with the following command
+```
+protoc-gen-grpc-web -
+```
+(should throw an error message saying "Unknown option: -")
 
 #### Install Node.js
 
@@ -64,7 +74,7 @@ This solution is split into multiple projects/directories. This section will exp
 | [Service](#project-service) | gRPC service implementation |
 | [Repository](#project-repository) | Database entities |
 | [Interface](#project-interface) | React frontend |
-| [Contracts](#project-contracts) | Contains the service contracts | 
+| [Contracts](#project-contracts) | Service contracts | 
 | [Tests](#project-tests) | Tests for the service | 
 
 ### Host <a name="project-host"></a>
