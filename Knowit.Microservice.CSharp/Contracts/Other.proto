@@ -4,7 +4,7 @@ package ProjectName;
 option csharp_namespace = "ProjectName";
 
 service Other {
-    rpc Echo (OtherEchoRequest) returns (OtherEchoResponse) {}
+    rpc Echo (OtherEchoRequest) returns (OtherEchoResponse);
 }
 
 message OtherEchoRequest {

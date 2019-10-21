@@ -4,7 +4,7 @@ package ProjectName;
 option csharp_namespace = "ProjectName";
 
 service Core {
-  rpc Echo (EchoRequest) returns (EchoResponse) {}
+  rpc Echo (EchoRequest) returns (EchoResponse);
 }
 
 message EchoRequest {
