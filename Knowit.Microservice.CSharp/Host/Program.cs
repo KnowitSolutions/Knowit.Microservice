@@ -81,7 +81,7 @@ namespace Host
             if (string.IsNullOrEmpty(connectionString))
             {
                 logger.LogInformation("No database connection string provided. Using in memory database.");
-                services.AddDbContext<Database>(options => options.UseInMemoryDatabase("ProjectName"));
+                services.AddDbContext<Database>(options => options.UseSqlite("Data Source=../Repository/projectname.db"));
             }
             else
             {
