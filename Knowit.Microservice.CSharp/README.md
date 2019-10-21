@@ -153,7 +153,7 @@ Database connections are configured by providing a `ConnectionString` in `appset
 ```json
 {
   "ConnectionStrings": {
-    "BloggingDatabase": "Server=projectname.dev;Database=projectname;User ID=projectname;Password=projectname"
+    "DatabaseConnection": "Server=projectname.dev;Database=projectname;User ID=projectname;Password=projectname"
   }
 }
 ```
@@ -193,4 +193,28 @@ The client can now be accessed in the `Service` through dependency injection.
 
 `appsettings.Production.json` contains an incomplete configuration for the Elasticsearch Serilog sink. Make sure to update the `NodeUris` property. [See the documentation for details](https://github.com/serilog/serilog-sinks-elasticsearch).
 
+## Tools
+
+### Bloom RPC
+
+Service endpoints can easily be debugged using [Bloom RPC](https://github.com/uw-labs/bloomrpc) which should be familiar to users of Postman or similar tools for RESTful APIs.
+
+_Get started using Bloom RPC:_
+
+* Download the latest version from [the Github releases page](https://github.com/uw-labs/bloomrpc/releases)
+* Install and run
+* Import the `.proto` file(s) into Bloom
+* Input `localhost:8081` in the address field
+* Start sending and receiving requests
+
+## Conventions
+
+### Code style
+
+* [C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
+* [Google API Design Guide](https://cloud.google.com/apis/design/)
+
+### Nullable reference types
+
+The project takes advantage of the new C# 8.0 feature, [nullable reference types](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/nullable-reference-types). You declare a variable to be a nullable reference type by appending a `?` to the type. For example, `string?` represents a nullable `string`. Types with no `?` are never supposed to be `null`. 
 
