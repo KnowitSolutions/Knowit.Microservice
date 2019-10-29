@@ -57,6 +57,7 @@ namespace Host
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpcClientConfiguration<Other.OtherClient>();
+            
             services.AddCorrelationId();
             services.AddGrpcWeb();
             services.AddGrpc(options =>
@@ -64,36 +65,37 @@ namespace Host
                 options.AddCorrelationId();
                 options.AddValidationInterceptor();
             });
+            
             services.AddValidator<EchoRequestValidator>();
-
-            ConfigureDatabaseServices(services);
-        }
-
-        private static void ConfigureDatabaseServices(IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var logger = serviceProvider.GetService<ILogger<Program>>();
-
-            var connectionString = configuration.GetConnectionString("DatabaseConnection");
-
-            if (string.IsNullOrEmpty(connectionString))
+            
+            services.AddDbContext<Database>((provider, options) =>
             {
-                logger.LogInformation("No database connection string provided. Using in memory database.");
-                services.AddDbContext<Database>(options => options.UseSqlite("Data Source=../Repository/projectname.db"));
-            }
-            else
-            {
-                var connectionStringBuilder = new DbConnectionStringBuilder {ConnectionString = connectionString};
-                connectionStringBuilder.Remove("password");
+                var connectionString = provider
+                    .GetRequiredService<IConfiguration>()
+                    .GetConnectionString("DatabaseConnection");
 
-                logger.LogInformation(
-                    "Connecting to database using connection: {ConnectionString}",
-                    connectionStringBuilder.ConnectionString
-                );
-                services.AddDbContext<Database>(options => options.UseSqlServer(connectionString));
-            }
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    provider
+                        .GetRequiredService<ILogger<Program>>()
+                        .LogInformation("No database connection string provided. Using in memory database.");
+                    
+                    options.UseSqlite("Data Source=../projectname.db");
+                }
+                else
+                {
+                    var connectionStringBuilder = new DbConnectionStringBuilder {ConnectionString = connectionString};
+                    connectionStringBuilder.Remove("password");
+                    
+                    provider
+                        .GetRequiredService<ILogger<Program>>()
+                        .LogInformation(
+                            "Connecting to database using connection: {ConnectionString}",
+                            connectionStringBuilder.ConnectionString);
+                
+                    options.UseSqlServer(connectionString);
+                }
+            });
         }
 
         private static void ConfigureKestrel(KestrelServerOptions kestrel)
