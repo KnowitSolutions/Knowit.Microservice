@@ -1,7 +1,9 @@
 include:
   - project: r/ci-cd-fragments
+    ref: v1.0
     file: docker.yml
   - project: r/ci-cd-fragments
+    ref: v1.0
     file: code-quality.yml
 
 Build:
