@@ -1,5 +1,5 @@
 using FluentValidation;
-using ProjectName;
+using ProjectName.Api;
 
 namespace Service
 {

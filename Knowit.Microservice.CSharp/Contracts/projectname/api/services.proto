@@ -1,0 +1,9 @@
+syntax = "proto3";
+import "projectname/api/echo.proto";
+
+package projectname.api;
+option csharp_namespace = "ProjectName.Api";
+
+service Core {
+    rpc Echo (EchoRequest) returns (EchoResponse);
+}

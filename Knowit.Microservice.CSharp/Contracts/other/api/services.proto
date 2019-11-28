@@ -1,0 +1,9 @@
+syntax = "proto3";
+import "other/api/call.proto";
+
+package other.api;
+option csharp_namespace = "Other.Api";
+
+service Core {
+    rpc Call (CallRequest) returns (CallResponse);
+}

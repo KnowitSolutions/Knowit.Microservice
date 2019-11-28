@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.9.2" />
+        <PackageReference Include="Grpc.Core" Version="2.24.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.24.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="other\api\call.proto" OutputDir="$(Protobuf_OutputPath)\other\api" />
+        <Protobuf Include="other\api\services.proto" OutputDir="$(Protobuf_OutputPath)\other\api" />
+        <Protobuf Include="projectname\api\echo.proto" OutputDir="$(Protobuf_OutputPath)\projectname\api" />
+        <Protobuf Include="projectname\api\services.proto" OutputDir="$(Protobuf_OutputPath)\projectname\api" />
+    </ItemGroup>
+
+</Project>

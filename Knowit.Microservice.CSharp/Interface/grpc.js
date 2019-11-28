@@ -8,7 +8,7 @@ try {
   if (error.code !== "EEXIST") throw error;
 }
 
-const files = glob.sync("../Contracts/*.proto");
+const files = glob.sync("../Contracts/**/*.proto");
 child_process.execSync([
   "protoc",
   ...files,

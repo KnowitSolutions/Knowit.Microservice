@@ -9,6 +9,7 @@ RUN chmod u+rwx,go+rx-w /usr/bin/protoc-gen-grpc-web
 WORKDIR /build
 
 COPY *.sln .
+COPY Contracts/*.csproj Contracts/
 COPY Host/*.csproj Host/
 COPY Interface/*.csproj Interface/package.json Interface/yarn.lock Interface/
 COPY Service/*.csproj Service/
@@ -28,4 +29,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 WORKDIR /app
 COPY --from=builder /output ./
 
-ENTRYPOINT ["dotnet", "Host.dll"]
+ENTRYPOINT ["dotnet", "Host.dll", "--environment", "Docker"]

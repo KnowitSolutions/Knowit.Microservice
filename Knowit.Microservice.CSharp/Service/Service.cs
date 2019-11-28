@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
-using ProjectName;
+using ProjectName.Api;
 using Repository;
 
 namespace Service
@@ -10,9 +10,9 @@ namespace Service
     {
         private readonly ILogger<Service> _logger;
         private readonly Database _database;
-        private readonly Other.OtherClient _otherClient;
+        private readonly Other.Api.Core.CoreClient _otherClient;
 
-        public Service(ILogger<Service> logger, Database database, Other.OtherClient otherClient)
+        public Service(ILogger<Service> logger, Database database, Other.Api.Core.CoreClient otherClient)
         {
             _logger = logger;
             _database = database;

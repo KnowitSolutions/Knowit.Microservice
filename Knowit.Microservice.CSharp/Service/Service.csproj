@@ -6,19 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Google.Protobuf" Version="3.9.2" />
-        <PackageReference Include="Grpc.Core" Version="2.24.0" />
-        <PackageReference Include="Grpc.Tools" Version="2.24.0" />
-        <PackageReference Include="Knowit.Grpc.Validation" Version="0.9.25" />
+        <PackageReference Include="Knowit.Grpc.Validation" Version="0.9.37" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Contracts\Contracts.csproj" />
         <ProjectReference Include="..\Repository\Repository.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="..\Contracts\ProjectName.proto" />
-        <Protobuf Include="..\Contracts\Other.proto" />
     </ItemGroup>
 
     <ItemGroup>

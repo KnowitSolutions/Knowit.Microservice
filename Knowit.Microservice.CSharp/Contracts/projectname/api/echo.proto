@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package projectname.api;
+option csharp_namespace = "ProjectName.Api";
+
+message EchoRequest {
+  string message = 1;
+}
+
+message EchoResponse {
+  string message = 1;
+}

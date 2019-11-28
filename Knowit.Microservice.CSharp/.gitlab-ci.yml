@@ -1,19 +1,49 @@
 include:
   - project: r/ci-cd-fragments
-    ref: v1.0
+    ref: v2.0
     file: docker.yml
   - project: r/ci-cd-fragments
-    ref: v1.0
+    ref: v2.0
+    file: dotnet.yml
+  - project: r/ci-cd-fragments
+    ref: v2.0
+    file: octopus.yml
+  - project: r/ci-cd-fragments
+    ref: v2.0
     file: code-quality.yml
 
-Build:
+Build executable:
+  extends: .dotnet-publish
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PROJECT_PATH: Host
+    VERSION: 1.0.$CI_PIPELINE_IID
+    RUNTIME: win-x64
+    SINGLE_FILE: 'true'
+
+Test executable:
+  extends: .dotnet-test
+  needs: [Build executable]
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+
+Build image:
   extends: .docker-build
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
     BUILDER: 'true'
 
-Test:
-  extends: .docker-test-report
+Test image:
+  extends: .docker-test
+  needs: [Build image]
   allow_failure: true
   variables:
     COMMAND: dotnet test --logger "junit;LogFilePath=$REPORT_PATTERN"
+
+Publish to octopus:
+  extends: .dotnet-octo-pack
+  dependencies: [Build executable]
+  needs: [Build executable, Test executable]
+  variables:
+    VERSION: 1.0.$CI_PIPELINE_IID
+    OCTOPUS_SPACE: AS Financiering

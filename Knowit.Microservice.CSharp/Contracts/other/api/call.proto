@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package other.api;
+option csharp_namespace = "Other.Api";
+
+message CallRequest {
+  string message = 1;
+}
+
+message CallResponse {
+  string message = 1;
+}

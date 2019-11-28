@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useClient} from "./Client";
-import {EchoRequest} from "../Contracts/ProjectName_pb";
+import {EchoRequest} from "../Contracts/projectname/api/echo_pb";
 
 export const useMessage = (requestMessage) => {
     const client = useClient();

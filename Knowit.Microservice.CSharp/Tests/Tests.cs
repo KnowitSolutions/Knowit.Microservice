@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Knowit.Grpc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName;
 using NUnit.Framework;
+using ProjectName.Api;
 using Repository;
 
 namespace Tests
@@ -21,7 +21,7 @@ namespace Tests
             base.ConfigureServices(services);
 
             // TODO: Add client mocking
-            services.AddGrpcClient<Other.OtherClient>(options =>
+            services.AddGrpcClient<Other.Api.Core.CoreClient>("other", options =>
             {
                 options.Address = new Uri("http://localhost");
             });
