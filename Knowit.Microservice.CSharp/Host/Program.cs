@@ -139,6 +139,8 @@ namespace Host
             {
                 logger.LogInformation("Migrating databases");
                 await database.Database.MigrateAsync();
+                logger.LogInformation("Migration complete");
+                if (databaseOptions.OnlyMigrate) Environment.Exit(0);
             }
             else
             {
