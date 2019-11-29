@@ -111,7 +111,7 @@ namespace Host
                 options.UseSqlite($"Data Source={path}");
 
                 logger.LogInformation(
-                    "No database connection string provided." +
+                    "No database connection string provided. " +
                     "Using local SQLite database at '{Path}'.", path);
             }
             else
