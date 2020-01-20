@@ -8,7 +8,7 @@
         <Authors>Andreas Hagen</Authors>
         <Description>Template for creating microservices at Knowit.</Description>
         <PackageTags>dotnet-new;template;knowit</PackageTags>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <IncludeContentInPack>true</IncludeContentInPack>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <ContentTargetFolders>content</ContentTargetFolders>

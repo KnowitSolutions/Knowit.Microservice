@@ -1,26 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <IsPackable>false</IsPackable>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Knowit.Grpc.Validation" Version="0.9.37" />
+        <PackageReference Include="Knowit.Grpc.Validation" Version="0.9.43" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Contracts\Contracts.csproj" />
         <ProjectReference Include="..\Repository\Repository.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <_ContentIncludedByDefault Remove="wwwroot\app.js" />
-        <_ContentIncludedByDefault Remove="wwwroot\app.js.map" />
-        <_ContentIncludedByDefault Remove="wwwroot\index.html" />
-        <_ContentIncludedByDefault Remove="wwwroot\main.js" />
-        <_ContentIncludedByDefault Remove="wwwroot\main.js.map" />
-        <_ContentIncludedByDefault Remove="wwwroot\react-dom.js" />
-        <_ContentIncludedByDefault Remove="wwwroot\react.js" />
     </ItemGroup>
 </Project>

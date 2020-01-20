@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
@@ -9,6 +9,14 @@
     <ItemGroup>
         <WebpackInput Include="**/*.js;**/*.jsx;**/*.ts;**/*.tsx;" />
         <WebpackOutput Include="../Host/wwwroot/*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="node_modules\**" />
+      <EmbeddedResource Remove="node_modules\**" />
+      <None Remove="node_modules\**" />
+      <WebpackInput Remove="node_modules\**" />
+      <WebpackOutput Remove="node_modules\**" />
     </ItemGroup>
 
     <Target Name="Yarn" AfterTargets="CollectPackageReferences">
