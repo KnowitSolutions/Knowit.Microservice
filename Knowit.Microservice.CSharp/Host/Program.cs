@@ -1,14 +1,8 @@
 using System;
-using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Knowit.Grpc.Client;
-using Knowit.Grpc.Correlation;
-using Knowit.Grpc.Validation;
-using Knowit.Grpc.Web;
 using Knowit.Kestrel.ProtocolMultiplexing;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
@@ -16,145 +10,114 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Repository;
 using Serilog;
 using Serilog.Events;
-using Service;
 using HostBuilder = Microsoft.Extensions.Hosting.Host;
 
 namespace Host
 {
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            var host = CreateHostBuilder(args).Build();
-            await ConfigureMigration(host);
-            host.Run();
-        }
+	public class Program
+	{
+		private static ILogger _logger;
 
-        public static IHostBuilder CreateHostBuilder(string[] args) => HostBuilder
-            .CreateDefaultBuilder(args)
-            .UseWindowsService()
-            .UseSerilog(ConfigureSerilog)
-            .ConfigureWebHostDefaults(web => web
-                .Configure(Configure)
-                .ConfigureAppConfiguration(ConfigureAppConfiguration)
-                .ConfigureServices(ConfigureServices)
-                .ConfigureKestrel(ConfigureKestrel));
+		public static async Task<int> Main(string[] args)
+		{
+			_logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+				.Enrich.FromLogContext()
+				.WriteTo.Console()
+				.CreateLogger();
 
-        private static void Configure(IApplicationBuilder app)
-        {
-            app.UseCorrelationId();
-            app.UseSerilogRequestLogging();
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-            app.UseGrpcWeb();
-            app.UseRouting();
-            app.UseEndpoints(endpoints => endpoints.MapGrpcService<Service.Service>());
-        }
+			try
+			{
+				_logger.Information("Service is starting up.");
+				_logger.Information("Initializing the host.");
 
-        private static void ConfigureSerilog(HostBuilderContext context, LoggerConfiguration config)
-        {
-            config
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .ReadFrom.Configuration(context.Configuration)
-                .Enrich.FromLogContext();
+				var host = CreateHostBuilder(args).Build();
 
-            if (WindowsServiceHelpers.IsWindowsService())
-            {
-                config.WriteTo.EventLog("Application", restrictedToMinimumLevel: LogEventLevel.Warning);
-            }
-        }
+				await MigrateDatabase(host);
 
-        private static void ConfigureAppConfiguration(IConfigurationBuilder config)
-        {
-            var process = Process.GetCurrentProcess();
-            var module = process.MainModule;
-            if (module?.ModuleName == "dotnet.exe" || module?.ModuleName == "dotnet") return;
-            var path = Path.GetDirectoryName(module?.FileName);
-            config.SetBasePath(path);
-        }
+				_logger.Information("Starting the host.");
+				await host.RunAsync();
+				return 0;
+			}
+			catch (Exception ex)
+			{
+				_logger.Fatal(ex, "Host terminated unexpectedly");
+				return 1;
+			}
+			finally
+			{
+				Log.CloseAndFlush();
+			}
+		}
 
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddConfigurableGrpcClient<Other.Api.Core.CoreClient>();
-            services.AddValidator<EchoRequestValidator>();
+		private static async Task MigrateDatabase(IHost host)
+		{
+			using var scope = host.Services.CreateScope();
+			var databaseOptions = scope.ServiceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
-            services.AddCorrelationId();
-            services.AddGrpcWeb();
-            services.AddGrpc(options => options.AddValidationInterceptor());
+			if (databaseOptions.Migrate)
+			{
+				_logger.Information("Migrating database");
+				var database = scope.ServiceProvider.GetRequiredService<Database>();
+				await database.Database.MigrateAsync();
+				_logger.Information("Migration complete");
+				if (databaseOptions.OnlyMigrate) Environment.Exit(0);
+			}
+			else
+			{
+				_logger.Information("Data migration disabled. Skipping...");
+			}
+		}
 
-            services
-	            .AddOptions<DatabaseOptions>()
-	            .Configure<IConfiguration>((options, configuration) =>
-		            configuration.GetSection("Database").Bind(options));
+		public static IHostBuilder CreateHostBuilder(string[] args) => HostBuilder
+			.CreateDefaultBuilder(args)
+			.UseWindowsService()
+			.UseSerilog(ConfigureSerilog)
+			.ConfigureWebHostDefaults(webBuilder => webBuilder
+				.ConfigureAppConfiguration(_ => ConfigureAppConfiguration(_, args))
+				.ConfigureKestrel(ConfigureKestrel)
+				.UseStartup<Startup>()
+			);
 
-            services.AddDbContext<Database>(ConfigureDbContext);
-        }
+		private static void ConfigureSerilog(HostBuilderContext context, LoggerConfiguration config)
+		{
+			config
+				.MinimumLevel.Debug()
+				.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+				.MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+				.ReadFrom.Configuration(context.Configuration)
+				.Enrich.FromLogContext();
 
-        private static void ConfigureDbContext(IServiceProvider provider, DbContextOptionsBuilder options)
-        {
-            var logger = provider.GetRequiredService<ILogger<Program>>();
-            var connectionString = provider
-                .GetRequiredService<IConfiguration>()
-                .GetConnectionString("Database");
-            var databaseOptions = provider.GetRequiredService<IOptionsMonitor<DatabaseOptions>>().CurrentValue;
-            var environment = provider.GetRequiredService<IWebHostEnvironment>();
+			if (WindowsServiceHelpers.IsWindowsService())
+			{
+				config.WriteTo.EventLog("Application", restrictedToMinimumLevel: LogEventLevel.Warning);
+			}
+		}
 
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                var path = Path.IsPathRooted(databaseOptions.Path)
-                    ? Path.Combine(databaseOptions.Path, "projectname.db")
-                    : Path.Combine(environment.ContentRootPath, databaseOptions.Path, "projectname.db");
-                path = Path.GetFullPath(path);
-                options.UseSqlite($"Data Source={path}");
+		private static void ConfigureAppConfiguration(IConfigurationBuilder config, string[] args)
+		{
+			void SetConfigurationBasePath()
+			{
+				var module = Process.GetCurrentProcess().MainModule;
+				if (module?.ModuleName != "dotnet" && module?.ModuleName != "dotnet.exe")
+				{
+					config.SetBasePath(Path.GetDirectoryName(module?.FileName));
+				}
+			}
 
-                logger.LogInformation(
-                    "No database connection string provided. " +
-                    "Using local SQLite database at '{Path}'.", path);
-            }
-            else
-            {
-                options.UseSqlServer(connectionString);
+			SetConfigurationBasePath();
+			config.AddEnvironmentVariables(prefix: "PROJECT_NAME_");
+			config.AddCommandLine(args);
+		}
 
-                var builder = new DbConnectionStringBuilder {ConnectionString = connectionString};
-                builder.Remove("password");
-                logger.LogInformation(
-                    "Connecting to database using connection: {ConnectionString}",
-                    builder.ConnectionString);
-            }
-        }
-
-        private static async Task ConfigureMigration(IHost host)
-        {
-            using var scope = host.Services.CreateScope();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-            var databaseOptions = scope.ServiceProvider
-                .GetRequiredService<IOptionsMonitor<DatabaseOptions>>()
-                .CurrentValue;
-            var database = scope.ServiceProvider.GetRequiredService<Database>();
-
-            if (databaseOptions.Migrate)
-            {
-                logger.LogInformation("Migrating databases");
-                await database.Database.MigrateAsync();
-                logger.LogInformation("Migration complete");
-                if (databaseOptions.OnlyMigrate) Environment.Exit(0);
-            }
-            else
-            {
-                logger.LogInformation("Skipping database migrations");
-            }
-        }
-
-        private static void ConfigureKestrel(KestrelServerOptions kestrel)
-        {
-            kestrel.ConfigureEndpointDefaults(options => options.UseProtocolMultiplexing());
-        }
-    }
+		private static void ConfigureKestrel(KestrelServerOptions kestrel)
+		{
+			kestrel.ConfigureEndpointDefaults(options => options.UseProtocolMultiplexing());
+		}
+	}
 }

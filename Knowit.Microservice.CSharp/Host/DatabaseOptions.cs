@@ -4,6 +4,5 @@ namespace Host
     {
         public bool Migrate { get; set; }
         public bool OnlyMigrate { get; set; }
-        public string Path { get; set; } = "";
     }
 }
