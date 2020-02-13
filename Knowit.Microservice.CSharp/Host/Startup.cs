@@ -23,6 +23,8 @@ namespace Host
 			//Access settings / options like this:
 			//var startupOptions = Configuration.GetSection("Startup").Get<StartupOptions>();
 
+			services.Configure<Service.ServiceOptions>(options => Configuration.GetSection("Service").Bind(options));
+
 			services.AddCorrelationId();
 			services.AddGrpcWeb();
 			services.AddGrpc(options => { });
