@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <WebpackInput Include="**/*.js;**/*.jsx;**/*.ts;**/*.tsx;" />
-        <WebpackOutput Include="../Host/wwwroot/*" />
+        <WebpackOutput Include="../Host/wwwroot/app.js" />
     </ItemGroup>
 
     <ItemGroup>

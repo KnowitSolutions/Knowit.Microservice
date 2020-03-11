@@ -18,7 +18,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ProjectName;
 using Repository;
 using Serilog;
 using Serilog.Events;
@@ -76,7 +75,7 @@ namespace Host
         {
             var process = Process.GetCurrentProcess();
             var module = process.MainModule;
-            if (module?.ModuleName == "dotnet") return;
+            if (module?.ModuleName == "dotnet.exe" || module?.ModuleName == "dotnet") return;
             var path = Path.GetDirectoryName(module?.FileName);
             config.SetBasePath(path);
         }
@@ -89,7 +88,7 @@ namespace Host
             services.AddCorrelationId();
             services.AddGrpcWeb();
             services.AddGrpc(options => options.AddValidationInterceptor());
-            
+
             services.AddDbContext<Database>(ConfigureDbContext);
         }
 

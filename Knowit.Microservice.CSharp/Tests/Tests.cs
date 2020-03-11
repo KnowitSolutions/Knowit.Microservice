@@ -12,7 +12,7 @@ namespace Tests
 {
     public class ServiceTests : ServiceTests<Core.CoreClient, Service.Service>
     {
-        
+
         [NotNull]
         private Database? _database;
 
@@ -25,7 +25,7 @@ namespace Tests
             {
                 options.Address = new Uri("http://localhost");
             });
-            
+
             services.AddDbContext<Database>(options =>
                 options.UseInMemoryDatabase("TestDatabase")
             );
@@ -36,7 +36,7 @@ namespace Tests
         {
             _database = Services.GetRequiredService<Database>();
             // entities will persist between tests, remove them if this is undesirable
-            _database.Entity.RemoveRange(_database.Entity);
+            _database.Database.EnsureDeleted();
         }
 
         [Test]
