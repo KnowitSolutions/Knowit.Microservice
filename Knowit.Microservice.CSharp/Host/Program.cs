@@ -89,6 +89,11 @@ namespace Host
             services.AddGrpcWeb();
             services.AddGrpc(options => options.AddValidationInterceptor());
 
+            services
+	            .AddOptions<DatabaseOptions>()
+	            .Configure<IConfiguration>((options, configuration) =>
+		            configuration.GetSection("Database").Bind(options));
+
             services.AddDbContext<Database>(ConfigureDbContext);
         }
 
